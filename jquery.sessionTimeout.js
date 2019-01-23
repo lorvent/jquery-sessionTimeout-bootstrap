@@ -29,6 +29,11 @@
 //     Text shown to user in dialog after warning period.
 //     Default: 'Your session is about to expire.'
 //
+//
+// keepAliveAjaxRequestType
+//     How should we make the call to the keep-alive url? (GET/POST/PUT)
+//     Default: 'POST'
+//
 //   titleMessage
 //     Text shown in the browser title/tab bar via the via html/head/title attribute.
 //     Default: 'Warning: Time Out'
@@ -76,6 +81,7 @@
             logoutBtn        : 'Logout',
             closeModals		 : otherModals,
 			keepAliveUrl     : '/keep-alive',
+			keepAliveAjaxRequestType: 'POST',
 			redirUrl         : '/timed-out',
 			logoutUrl        : '/log-out',
 			warnAfter        : 900000, // 15 minutes
@@ -110,7 +116,7 @@
 		$('#sessionTimeout-dialog-logout').on('click', function () { window.location = o.logoutUrl; });
 		$('#sessionTimeout-dialog').on('hide.bs.modal', function () {
 			$.ajax({
-				type: 'POST',
+				type: o.keepAliveAjaxRequestType,
 				url: o.keepAliveUrl
 			});
 
